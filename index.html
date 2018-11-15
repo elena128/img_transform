@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>pc端、移动端通过Canvas及File API缩放、拖拽、旋转、截取并上传图片</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .photo_block{
+            max-width:800px;
+            margin:0 auto;
+        }
+        .upload_block.active{
+            border-color: #ccc;
+        }
+        .upload_block{
+            position: relative;
+            height: 300px;
+            border: 2px dashed #e6e6e6;
+            margin: 20px;
+        }
+        .icon_image{
+            width: 88px;
+            height: 75px;
+            background: url(img/image.png);
+            margin: 65px auto 0 auto;
+        }
+        .btn_upload{
+            position: relative;
+            width: 180px;
+            height: 40px;
+            margin: 10px auto;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            background: #4A99DB;
+            border-radius: 5px;
+        }
+        .pc_word{
+            text-align: center;
+        }
+        #file{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height:40px;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .clip_block{
+            display: none;
+        }
+        .clip{
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        .mask{
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            bottom: 20px;
+            right: 20px;
+            pointer-events: none;
+            border:1px dashed #eee;
+        }
+        #ok {
+            width: 80px;
+            height: 25px;
+            color: #fff;
+            line-height: 25px;
+            text-align: center;
+            margin: 30px auto;
+            background: #F37078;
+        }
+    </style>
+</head>
+<body>
+<div class="photo_block">
+    <div class="upload_block">
+        <div class="icon_image"></div>
+        <div class="btn btn_upload">点击选择图片<input type="file" id="file" accept="image/*"></div>
+        <div class="pc_word">拖动图片文件到这里...</div>
+    </div>
+    <div class="clip_block">
+        <div class="clip">
+            <img src="" id="img">
+        </div>
+        <div id="ok">截取</div>
+    </div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/hammer.js"></script>
+<script src="js/jquery.mousewheel.js"></script>
+<script src="js/image_transform.js"></script>
+<script>
+    $(".clip").imageTransform({
+        width: 200,
+        height: 200,
+        upload: ".upload_block",
+        file: "#file",
+        view: "#img",
+        ok: "#ok",
+        loadComplete: function(){
+            $(".upload_block").hide()
+            $(".clip_block").show()
+        },
+        clipFinish: function(data){
+            console.log(data)
+        }
+    })
+</script>
+</body>
+</html>
